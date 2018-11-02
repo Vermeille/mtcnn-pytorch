@@ -31,6 +31,8 @@ def detect_faces(image, min_face_size=20.0, thresholds=[0.6, 0.7, 0.8],
         boxes = run_first_stage(image, pnet, scale=s, threshold=thresholds[0])
         bounding_boxes.append(boxes)
     bounding_boxes = [i for i in bounding_boxes if i is not None]
+    if len(bounding_boxes) == 0:
+        return [], []
     bounding_boxes = np.vstack(bounding_boxes)
 
     keep = nms(bounding_boxes[:, 0:5], nms_thresholds[0])
